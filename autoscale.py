@@ -1,10 +1,9 @@
-#!/usr/bin/env python
 import logging
-import sys
-
 import boto.ec2.autoscale
 import requests
+from integrations.ssm import get_parameters_by_path
 
+_aws = get_parameters_by_path('/autoscale-python/aws')
 
 logger = logging.getLogger(__name__)
 
@@ -12,7 +11,7 @@ logger = logging.getLogger(__name__)
 class MesosReporter():
     def __init__(self, mesos_url):
         self.mesos_url = mesos_url.rstrip('/')
-        stats_url = '/'.join([self.mesos_url, '/stats.json'])
+        stats_url = '/'.join([self.mesos_url, 'metrics/snapshot'])
         self._state = requests.get(stats_url).json()
 
     @property
@@ -50,14 +49,13 @@ class MesosDecider():
 
 
 class AwsAsgScaler():
-    def __init__(self, region, asg_name, min_instances=1, max_instances=None, 
-                 aws_access_key_id=None, aws_secret_access_key=None):
+    def __init__(self, region, asg_name, min_instances=1, max_instances=None):
         self.region = region
         self.asg_name = asg_name
         self.min_instances = min_instances
         self.max_instances = max_instances
-        self.aws_access_key_id = aws_access_key_id
-        self.aws_secret_access_key = aws_secret_access_key
+        self.aws_access_key_id = _aws['aws_access_key_id']
+        self.aws_secret_access_key = _aws['aws_secret_access_key']
 
     def _get_connection(self):
         if self.aws_access_key_id and self.aws_secret_access_key:
