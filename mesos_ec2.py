@@ -32,7 +32,7 @@ def main():
             scaler.scale(delta)
         else:
             logger.info('No change needed for {asg} in {region}'.format(asg=args.asg, region=args.region))
-        sleep(180)
+        sleep(300)
 
 
 if __name__ == '__main__':
