@@ -1,6 +1,6 @@
 {
   "id": "autoscale-mesos",
-  "cmd": "python mesos_ec2.py --mesos-url http://10.0.0.223:5050 --log-level info --cpus 1,3 --region eu-west-1 --asg MesosCluster",
+  "cmd": "python mesos_ec2.py --mesos-url http://10.0.0.223:5050 --log-level info --cpus 2,6 --region eu-west-1 --asg MesosCluster",
   "cpus": 0.2,
   "mem": 64.0,
   "healthChecks": [

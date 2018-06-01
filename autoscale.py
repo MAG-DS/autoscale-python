@@ -49,7 +49,7 @@ class MesosDecider():
 
 
 class AwsAsgScaler():
-    def __init__(self, region, asg_name, min_instances=1, max_instances=None):
+    def __init__(self, region, asg_name, min_instances=2, max_instances=None):
         self.region = region
         self.asg_name = asg_name
         self.min_instances = min_instances
